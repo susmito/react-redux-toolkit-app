@@ -16,7 +16,7 @@ const Dashoboard = () => {
     const jsonData = useSelector(state => state.reducer1.jsonData || [])
     const [currentPage, setCurrentPage] = useState(0)
     const [filterKey, setFilterKey] = useState('')
-    const filteredJsonData = jsonData.filter((item) => Object.values(item).join('').toLowerCase().includes(filterKey))
+    const filteredJsonData = jsonData.filter((item) => Object.values(item).join('').toLowerCase().includes(filterKey.toLowerCase()))
     const rowsPerPage = 10
     const noOfPages = filteredJsonData.length / rowsPerPage
     const currenntData = filteredJsonData.slice(currentPage * 10, (currentPage + 1) * 10)
