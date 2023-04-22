@@ -1,9 +1,10 @@
 import { all, takeLatest } from 'redux-saga/effects'
 
-import { dummySaga } from './saga1'
+import { dummySaga, getData } from './saga1'
 
 function* actionWatcher() {
-    yield takeLatest('LAUNCH_IT', dummySaga)
+    // yield takeLatest('LAUNCH_IT', dummySaga)
+    yield takeLatest('GET_DATA', getData)
 }
 
 export default function* rootSaga() {

@@ -12,12 +12,12 @@ export const reducer1Slice = createSlice({
         ADD_A_NODE: (state, action) => {
             state[action?.payload || 'default'] = action?.val
         },
-        LAUNCH_IT_RECIEVED: (state, action) => {
+        GET_DATA_RECIEVED: (state, action) => {
             state.jsonData = action.payload
         }
     }
 })
 
-export const { ADD_A_NODE, UPDATE_VALUE, LAUNCH_IT_RECIEVED } = reducer1Slice.actions
+export const { ADD_A_NODE, UPDATE_VALUE, GET_DATA_RECIEVED } = reducer1Slice.actions
 
 export default reducer1Slice.reducer;
