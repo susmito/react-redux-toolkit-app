@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TableData from './TableData'
 import { GET_DATA_RECIEVED } from '../@Redux/reducers/reducer1'
+import Pagination from './Pagination'
+import Filter from './Filter'
 
 // get the data from the api and display in table
 // pagination on client side (10 rows per page) with page numbers
@@ -16,7 +18,7 @@ const Dashoboard = () => {
     const [filterKey, setFilterKey] = useState('')
     const filteredJsonData = jsonData.filter((item) => Object.values(item).join('').toLowerCase().includes(filterKey))
     const rowsPerPage = 10
-    const noOfPages = jsonData.length / rowsPerPage
+    const noOfPages = filteredJsonData.length / rowsPerPage
     const currenntData = filteredJsonData.slice(currentPage * 10, (currentPage + 1) * 10)
     const [paginatedData, setPaginatedData] = useState(currenntData)
     useEffect(() => {
@@ -28,6 +30,7 @@ const Dashoboard = () => {
     }, [jsonData, currentPage, filterKey])
 
     const handleChange = (e) => {
+        setCurrentPage(0)
         setFilterKey(e.target.value)
     }
 
@@ -48,11 +51,17 @@ const Dashoboard = () => {
 
     return (
         <>
-            <div style={{ marginBottom: '16px' }}>Filter:
-                <input type="text" onChange={(e) => handleChange(e)} value={filterKey} />
-            </div>
-            {paginatedData.length > 0 ? <TableData data={paginatedData} sort={sort} /> : <h2>Fetching the data</h2>}
-            <div>{currentPage > 0 ? <button onClick={() => setCurrentPage(currentPage - 1)}>Prev</button> : <></>}{currentPage < noOfPages - 1 ? <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button> : <></>}</div>
+            {jsonData.length ?
+                <Filter filterKey={filterKey} handleChange={handleChange} /> :
+                <></>}
+            {paginatedData.length > 0 ? <>
+                <TableData data={paginatedData} sort={sort} />
+                <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    noOfPages={noOfPages}
+                />
+            </> : <h2>{jsonData.length ? `Could not find record with "${filterKey}"` : 'Fetching the data'}</h2>}
         </>
     )
 }
