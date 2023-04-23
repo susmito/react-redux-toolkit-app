@@ -5,7 +5,7 @@ const Pagination = ({ currentPage, setCurrentPage, noOfPages }) => {
     const PagesElement = () => {
         const arr = []
         for (let i = 0; i < noOfPages; i++) {
-            arr.push(<button onClick={() => setCurrentPage(i)}>{`${i + 1}`}</button>)
+            arr.push(<button className={currentPage === i ? 'selected-btn' : ''} onClick={() => setCurrentPage(i)}>{`${i + 1}`}</button>)
         }
         return arr
     }
